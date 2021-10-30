@@ -12,7 +12,7 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const GeneradorVehiculos = require("./modulos/GeneradorVehiculos");
 const { describe, test, expect } = require("@jest/globals");
 
-describe("Ejemplo creacion gasolinas", () => {
+describe("Ejemplo creacion Gasolinas", () => {
 
     test("Creación Regular", () => {
         const gas = new Regular();
