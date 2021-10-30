@@ -3,6 +3,7 @@ const Diesel = require("./modulos/Diesel");
 const Premium = require("./modulos/Premium");
 const Regular = require("./modulos/Regular");
 // Vehiculos
+const Vehiculo = require("./modulos/Vehiculo");
 const Auto = require("./modulos/Auto");
 const Camion = require("./modulos/Camion");
 const Moto = require("./modulos/Moto");
@@ -17,19 +18,19 @@ describe("Ejemplo creacion Gasolinas", () => {
     test("Creación Regular", () => {
         const gas = new Regular();
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toBe([1, 1, 1000, 1000]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([1, 1, 1000, 1000]);
     });
 
     test("Creación Premium", () => {
         const gas = new Premium();
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toBe([2, 2.3, 750, 750]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([2, 2.3, 750, 750]);
     });
 
     test("Creación Diesel", () => {
         const gas = new Diesel();
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toBe([3, 0.75, 2000, 2000]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([3, 0.7, 2000, 2000]);
     });
 });
 
