@@ -10,5 +10,13 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "jest": "^27.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomasagata/TpObjetosFinal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tomasagata/TpObjetosFinal/issues"
+  },
+  "homepage": "https://github.com/tomasagata/TpObjetosFinal#readme"
 }
