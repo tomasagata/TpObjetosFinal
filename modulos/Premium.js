@@ -1,4 +1,5 @@
 const Gasolina = require("./Gasolina");
+
 /* Premium extends Gasolina*/
 function Premium(costo = 2.3, almacenajeMax = 750, almacenajeActual = almacenajeMax) {
 
