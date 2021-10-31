@@ -2,14 +2,13 @@ const Auto = require("./Auto");
 const Camion = require("./Camion");
 const Moto = require("./Moto");
 
-function GeneradorVehiculos() {
-
-    if (!(this instanceof GeneradorVehiculos)) {
-        return new GeneradorVehiculos();
+const generadorVehiculos = (() => {
+    const getRandomInt = () => {
+        return Math.floor(Math.random() * 3); // Genera un entero aleatorio -> restringido a 0, 1 y 2
     }
 
-    this.generarVehiculo = function() {
-        let randomIntIndex = Math.floor(Math.random() * 3); // Genera un entero aleatorio -> restringido a 0, 1 y 2
+    const generarVehiculo = () => {
+        let randomIntIndex = getRandomInt();
         
         if (randomIntIndex === 0) {
             return Auto();
@@ -20,14 +19,18 @@ function GeneradorVehiculos() {
         }
     }
 
-    this.generarVehiculos = function(cant) {
+    const generarVehiculos = cant => {
         let arr = [];
         for (let i = 0; i < cant; i++) {
-            arr.push(this.generarVehiculo());
+            arr.push(generarVehiculo());
         }
         return arr;
     }
 
-}
+    return {
+        generarVehiculo,
+        generarVehiculos
+    }
+})();
 
-module.exports = GeneradorVehiculos;
+module.exports = generadorVehiculos;
