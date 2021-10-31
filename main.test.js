@@ -10,7 +10,7 @@ const Moto = require("./modulos/Moto");
 // Centro de Control
 const CentroDeControl = require("./modulos/CentroDeControl");
 // Generador de Vehiculos
-const GeneradorVehiculos = require("./modulos/GeneradorVehiculos");
+const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 const { describe, test, expect } = require("@jest/globals");
 
 describe("Ejemplo creacion Gasolinas", () => {
@@ -56,16 +56,14 @@ describe("Ejemplo creación automóviles", () => {
 });
 
 describe("Prueba GeneradorVehiculos", () => {
-    const generador = new GeneradorVehiculos();
-
     test("Creación 1 solo vehiculo", () => {
-        const vei = generador.generarVehiculo();
+        const vei = generadorVehiculos.generarVehiculo();
 
         expect(vei).toBeInstanceOf(Vehiculo);
     });
 
     test("Creación 10 vehículos", () => {
-        const arrVei = generador.generarVehiculos(10);
+        const arrVei = generadorVehiculos.generarVehiculos(10);
 
         expect(arrVei.length).toBe(10);
         arrVei.forEach(vei => {
