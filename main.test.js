@@ -39,13 +39,15 @@ describe("Ejemplo creación automóviles", () => {
     test("Creación Auto", () => {
         const vei = new Auto();
 
-        expect([vei.capacidad, vei.tipoCombustible, vei.cantCombustible]).toStrictEqual([50, "Regular", 0]);
+        expect([vei.capacidad, vei.cantCombustible]).toStrictEqual([50, 0]);
+        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
     });
 
     test("Creación Moto", () => {
         const vei = new Moto();
 
-        expect([vei.capacidad, vei.tipoCombustible, vei.cantCombustible]).toStrictEqual([10, "Regular", 0]);
+        expect([vei.capacidad, vei.cantCombustible]).toStrictEqual([10, 0]);
+        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
     });
 
     test("Creación Camión", () => {
