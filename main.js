@@ -11,7 +11,10 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 // Generador de Vehiculos
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
-let vei = generadorVehiculos.generarVehiculo();
-let arrVei = generadorVehiculos.generarVehiculos(10);
-console.log(vei.capacidad);
-arrVei.map(vei => console.log(vei.capacidad));
+// let vei = generadorVehiculos.generarVehiculo();
+// let arrVei = generadorVehiculos.generarVehiculos(10);
+// console.log(vei.capacidad);
+// arrVei.map(vei => console.log(vei.capacidad));
+
+let diesel = new Diesel();
+console.log(diesel.id, diesel.costo, diesel.almacenajeMax, diesel.almacenajeActual);
