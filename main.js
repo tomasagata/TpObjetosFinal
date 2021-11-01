@@ -12,10 +12,10 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
 // let vei = generadorVehiculos.generarVehiculo();
-// let arrVei = generadorVehiculos.generarVehiculos(10);
+let arrVei = generadorVehiculos.generarVehiculos(20);
 // console.log(vei.capacidad);
-// arrVei.map(vei => console.log(vei.capacidad));
+arrVei.map(vei => console.log(`${vei.capacidad} -> ${vei.tipoCombustible}`));
 
-let regular = new Regular();
-console.log(regular.id, regular.costo, regular.almacenajeMax, regular.almacenajeActual);
-regular.almacenajeActual = 1;
+// let regular = new Regular();
+// console.log(regular.id, regular.costo, regular.almacenajeMax, regular.almacenajeActual);
+// regular.almacenajeActual = 1;
