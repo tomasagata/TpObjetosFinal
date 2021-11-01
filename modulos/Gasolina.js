@@ -1,4 +1,4 @@
-function Gasolina(costo, almacenajeMax, almacenajeActual) {
+function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
 
     if (!(this instanceof Gasolina)) {
         return new Gasolina();
@@ -47,15 +47,28 @@ function Gasolina(costo, almacenajeMax, almacenajeActual) {
                 _almacenajeActual = valor;
             } else if (valor >= 0) {
                 _almacenajeActual = valor;
-                console.log("[!] Se necesita reponer combustible diesel");
+                console.log(`[!] Se necesita reponer combustible ${this.tipo}`);
             } else { throw new Error("[-] Almacenaje actual negativo"); }
         },
         get() { return _almacenajeActual; }
     });
 
+    Object.defineProperty(this, "tipo", {
+        set(tipo) {
+            if (tipo.trim() == '') {
+                console.log("[-] Ingrese el tipo de la gasolina");
+            } else {
+                // Eliminación de espacios en blanco innecesarios
+                this.tipoGasolina = tipo.trim().split(/\s+/).join(' ');
+            }
+        },
+        get() { return this.tipoGasolina }
+    });
+
     this.costo = costo;
     this.almacenajeMax = almacenajeMax;
     this.almacenajeActual = almacenajeActual;
+    this.tipo = tipo;
 }
 
 module.exports = Gasolina;

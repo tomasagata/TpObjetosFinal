@@ -7,7 +7,7 @@ function Regular(costo = 1, almacenajeMax = 1000, almacenajeActual = almacenajeM
         return new Regular(costo, almacenajeMax, almacenajeActual);
     }
 
-    Gasolina.call(this, costo, almacenajeMax, almacenajeActual);
+    Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Regular");
 }
 
 Regular.prototype = Object.create(Gasolina.prototype);

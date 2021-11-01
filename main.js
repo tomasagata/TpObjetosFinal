@@ -16,5 +16,6 @@ const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 // console.log(vei.capacidad);
 // arrVei.map(vei => console.log(vei.capacidad));
 
-let diesel = new Diesel();
-console.log(diesel.id, diesel.costo, diesel.almacenajeMax, diesel.almacenajeActual);
+let regular = new Regular();
+console.log(regular.id, regular.costo, regular.almacenajeMax, regular.almacenajeActual);
+regular.almacenajeActual = 1;
