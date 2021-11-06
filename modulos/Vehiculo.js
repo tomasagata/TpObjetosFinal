@@ -15,12 +15,13 @@ const generadorId = (() => {
     }
 })();
 
-function Vehiculo() {
+function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
     if (!(this instanceof Vehiculo)) {
         return new Vehiculo();
     }
 
     var _id = generadorId.genId(); 
+    var _tipoCombustible = tipoCombustible;
     var _capacidad;
     var _cantCombustible;
     
@@ -53,7 +54,13 @@ function Vehiculo() {
         },
         get() { return _cantCombustible; }
     });
-    
+
+    Object.defineProperty(this, "tipoCombustible", {
+        get() { return _tipoCombustible; }
+    });
+
+    this.capacidad = capacidad;
+    this.cantCombustible = cantCombustible;    
 }
 
 module.exports = Vehiculo;

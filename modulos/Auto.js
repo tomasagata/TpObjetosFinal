@@ -6,15 +6,7 @@ function Auto(capacidad = 50, cantCombustible = 0) {
         return new Auto(capacidad, cantCombustible);
     }
     
-    Vehiculo.call(this);
-    var _tipoCombustible = this.obtenerTipoCombustible();
-
-    Object.defineProperty(this, "tipoCombustible", {
-        get() { return _tipoCombustible; }
-    });
-
-    this.capacidad = capacidad;
-    this.cantCombustible = cantCombustible;
+    Vehiculo.call(this, capacidad, cantCombustible, this.obtenerTipoCombustible());
 }
 
 Auto.prototype = Object.create(Vehiculo.prototype);
