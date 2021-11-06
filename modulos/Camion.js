@@ -6,6 +6,7 @@ function Camion(capacidad = 100, cantCombustible = 0) {
         return new Camion(capacidad, cantCombustible);
     }
 
+    Vehiculo.call(this);
     var _tipoCombustible = "Diesel";
 
     Object.defineProperty(this, "tipoCombustible", {
