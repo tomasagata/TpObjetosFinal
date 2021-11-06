@@ -6,15 +6,7 @@ function Camion(capacidad = 100, cantCombustible = 0) {
         return new Camion(capacidad, cantCombustible);
     }
 
-    Vehiculo.call(this);
-    var _tipoCombustible = "Diesel";
-
-    Object.defineProperty(this, "tipoCombustible", {
-        get() { return _tipoCombustible; }
-    });
-
-    this.capacidad = capacidad;
-    this.cantCombustible = cantCombustible;
+    Vehiculo.call(this, capacidad, cantCombustible, "Diesel");
 }
 
 Camion.prototype = Object.create(Vehiculo.prototype);
