@@ -1,4 +1,5 @@
 const Vehiculo = require("./Vehiculo");
+const Gasolinera = require("./Gasolinera");
 
 function Moto(capacidad = 10, cantCombustible = 0) {
 
@@ -14,7 +15,7 @@ Moto.prototype.constructor = Moto.prototype;
 
 Moto.prototype.obtenerTipoCombustible = function() {
     let randomInt = Math.floor(Math.random() * 2);
-    return randomInt === 0 ? "Regular" : "Premium";
+    return randomInt === 0 ? Gasolinera.gasolinas.regular : Gasolinera.gasolinas.premium;
 }
 
 module.exports = Moto;
