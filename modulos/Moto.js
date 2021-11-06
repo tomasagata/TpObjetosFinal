@@ -6,6 +6,7 @@ function Moto(capacidad = 10, cantCombustible = 0) {
         return new Moto(capacidad, cantCombustible);
     }
 
+    Vehiculo.call(this);
     var _tipoCombustible = this.obtenerTipoCombustible();
 
     Object.defineProperty(this, "tipoCombustible", {

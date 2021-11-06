@@ -39,21 +39,21 @@ describe("Ejemplo creación automóviles", () => {
     test("Creación Auto", () => {
         const vei = new Auto();
 
-        expect([vei.capacidad, vei.cantCombustible]).toStrictEqual([50, 0]);
+        expect([vei.id, vei.capacidad, vei.cantCombustible]).toStrictEqual([1, 50, 0]);
         expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
     });
 
     test("Creación Moto", () => {
         const vei = new Moto();
 
-        expect([vei.capacidad, vei.cantCombustible]).toStrictEqual([10, 0]);
+        expect([vei.id, vei.capacidad, vei.cantCombustible]).toStrictEqual([2, 10, 0]);
         expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
     });
 
     test("Creación Camión", () => {
         const vei = new Camion();
 
-        expect([vei.capacidad, vei.tipoCombustible, vei.cantCombustible]).toStrictEqual([100, "Diesel", 0]);
+        expect([vei.id, vei.capacidad, vei.tipoCombustible, vei.cantCombustible]).toStrictEqual([3, 100, "Diesel", 0]);
     });
 });
 

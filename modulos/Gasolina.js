@@ -1,3 +1,20 @@
+const generadorId = (() => {
+    let id = 0;
+
+    const incrementarId = () => {
+        id++;
+    }
+
+    const genId = () => {
+        incrementarId();
+        return id;
+    }
+
+    return {
+        genId
+    }
+})();
+
 function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
 
     if (!(this instanceof Gasolina)) {
@@ -5,8 +22,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
     }
 
     
-    Gasolina.contador = ++Gasolina.contador || 1;
-    var _id = Gasolina.contador;
+    var _id = generadorId.genId();
     var _costo;
     var _almacenajeMax;
     var _almacenajeActual;
