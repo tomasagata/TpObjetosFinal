@@ -11,24 +11,26 @@ const Moto = require("./modulos/Moto");
 const CentroDeControl = require("./modulos/CentroDeControl");
 // Generador de Vehiculos
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
+// Gasolinera
+const Gasolinera = require("./modulos/Gasolinera");
 const { describe, test, expect } = require("@jest/globals");
 
-describe("Ejemplo creacion Gasolinas", () => {
+describe("Verificación de la creacion Gasolinas", () => {
 
     test("Creación Regular", () => {
-        const gas = new Regular();
+        const gas = Gasolinera.gasolinas.regular;
 
         expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([1, 1, 1000, 1000]);
     });
 
     test("Creación Premium", () => {
-        const gas = new Premium();
+        const gas = Gasolinera.gasolinas.premium;
 
         expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([2, 2.3, 750, 750]);
     });
 
     test("Creación Diesel", () => {
-        const gas = new Diesel();
+        const gas = Gasolinera.gasolinas.diesel;
 
         expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([3, 0.7, 2000, 2000]);
     });
@@ -40,20 +42,20 @@ describe("Ejemplo creación automóviles", () => {
         const vei = new Auto();
 
         expect([vei.id, vei.capacidad, vei.cantCombustible]).toStrictEqual([1, 50, 0]);
-        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
+        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible.tipo);
     });
 
     test("Creación Moto", () => {
         const vei = new Moto();
 
         expect([vei.id, vei.capacidad, vei.cantCombustible]).toStrictEqual([2, 10, 0]);
-        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible);
+        expect(["Regular", "Premium"]).toContain(vei.tipoCombustible.tipo);
     });
 
     test("Creación Camión", () => {
         const vei = new Camion();
 
-        expect([vei.id, vei.capacidad, vei.tipoCombustible, vei.cantCombustible]).toStrictEqual([3, 100, "Diesel", 0]);
+        expect([vei.id, vei.capacidad, vei.tipoCombustible.tipo, vei.cantCombustible]).toStrictEqual([3, 100, "Diesel", 0]);
     });
 });
 

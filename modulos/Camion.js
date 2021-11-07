@@ -1,4 +1,5 @@
 const Vehiculo = require("./Vehiculo");
+const Gasolinera = require("./Gasolinera");
 
 function Camion(capacidad = 100, cantCombustible = 0) {
 
@@ -6,7 +7,7 @@ function Camion(capacidad = 100, cantCombustible = 0) {
         return new Camion(capacidad, cantCombustible);
     }
 
-    Vehiculo.call(this, capacidad, cantCombustible, "Diesel");
+    Vehiculo.call(this, capacidad, cantCombustible, Gasolinera.gasolinas.diesel);
 }
 
 Camion.prototype = Object.create(Vehiculo.prototype);
