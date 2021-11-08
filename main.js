@@ -13,9 +13,14 @@ const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
 // let vei = generadorVehiculos.generarVehiculo();
 let arrVei = generadorVehiculos.generarVehiculos(20);
+let cdc = new CentroDeControl();
+
+arrVei.forEach((vei) => {
+    cdc.facturarCarga(vei);
+});
 // console.log(vei.capacidad);
 // arrVei.map(vei => console.log(`${vei.capacidad} -> ${vei.tipoCombustible}`));
-arrVei.map(vei => console.log(vei.id));
+//arrVei.map(vei => console.log(vei.id));
 
 // let regular = new Regular();
 // console.log(regular.id, regular.costo, regular.almacenajeMax, regular.almacenajeActual);

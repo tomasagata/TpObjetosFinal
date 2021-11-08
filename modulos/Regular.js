@@ -10,6 +10,7 @@ function Regular(costo = 1, almacenajeMax = 1000, almacenajeActual = almacenajeM
     Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Regular");
 }
 
+
 Regular.prototype = Object.create(Gasolina.prototype);
 Regular.prototype.constructor = Regular.prototype;
 

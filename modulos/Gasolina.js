@@ -1,3 +1,5 @@
+const CentroDeControl = require("./CentroDeControl");
+
 const generadorId = (() => {
     let id = 0;
 
@@ -18,19 +20,21 @@ const generadorId = (() => {
 function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
 
     if (!(this instanceof Gasolina)) {
-        return new Gasolina();
+        return new Gasolina(costo, almacenajeMax, almacenajeActual, tipo);
     }
 
-    
+
     var _id = generadorId.genId();
     var _costo;
     var _almacenajeMax;
     var _almacenajeActual;
-    
+    var _tipoGasolina;
+
     Object.defineProperty(this, "id", {
         get() {
             return _id;
-        }
+        },
+        enumerable
     });
 
     Object.defineProperty(this, "costo", {
@@ -41,7 +45,8 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
                 throw new Error("[-] Costo inválido.");
             }
         },
-        get() { return _costo; }
+        get() { return _costo; },
+        enumerable
     });
 
     Object.defineProperty(this, "almacenajeMax", {
@@ -52,21 +57,25 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
                 throw new Error("[-] Almacenaje máximo inválido.");
             }
         },
-        get() { return _almacenajeMax; }
+        get() { return _almacenajeMax; },
+        enumerable
     });
-    
+
     Object.defineProperty(this, "almacenajeActual", {
         set(valor) {
             if (valor > _almacenajeMax) {
                 throw new Error("[-] Almacenaje actual supera máximo permitido");
-            } else if (valor >= _almacenajeMax / 2) {
+            } else if (valor >= 500) {
                 _almacenajeActual = valor;
             } else if (valor >= 0) {
                 _almacenajeActual = valor;
                 console.log(`[!] Se necesita reponer combustible ${this.tipo}`);
+                let cdc = new CentroDeControl()
+                cdc.rellenarCombustible(this.tipo); // Sería un metodo estatico. Pero como no existen, lo implemento así
             } else { throw new Error("[-] Almacenaje actual negativo"); }
         },
-        get() { return _almacenajeActual; }
+        get() { return _almacenajeActual; },
+        enumerable
     });
 
     Object.defineProperty(this, "tipo", {
@@ -75,10 +84,11 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
                 console.log("[-] Ingrese el tipo de la gasolina");
             } else {
                 // Eliminación de espacios en blanco innecesarios
-                this.tipoGasolina = tipo.trim().split(/\s+/).join(' ');
+                _tipoGasolina = tipo.trim().split(/\s+/).join(' ');
             }
         },
-        get() { return this.tipoGasolina }
+        get() { return _tipoGasolina; },
+        enumerable
     });
 
     this.costo = costo;

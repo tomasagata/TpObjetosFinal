@@ -10,6 +10,7 @@ function Diesel(costo = 0.7, almacenajeMax = 2000, almacenajeActual = almacenaje
     Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Diesel");
 }
 
+console.log(Gasolina.prototype);
 Diesel.prototype = Object.create(Gasolina.prototype);
 Diesel.prototype.constructor = Diesel.prototype;
 

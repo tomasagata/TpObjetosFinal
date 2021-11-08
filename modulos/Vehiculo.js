@@ -20,17 +20,18 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
         return new Vehiculo();
     }
 
-    var _id = generadorId.genId(); 
+    var _id = generadorId.genId();
     var _tipoCombustible = tipoCombustible;
     var _capacidad;
     var _cantCombustible;
-    
+
     Object.defineProperty(this, "id", {
         get() {
             return _id;
-        }
+        },
+        enumerable
     });
-    
+
     Object.defineProperty(this, "capacidad", {
         set(valor) {
             if (valor >= 0) {
@@ -39,7 +40,8 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
                 throw new Error("[-] Capacidad inválida");
             }
         },
-        get() { return _capacidad; }
+        get() { return _capacidad; },
+        enumerable
     });
 
     Object.defineProperty(this, "cantCombustible", {
@@ -52,15 +54,17 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
                 throw new Error("[-] Cantidad de combustible negativa");
             }
         },
-        get() { return _cantCombustible; }
+        get() { return _cantCombustible; },
+        enumerable
     });
 
     Object.defineProperty(this, "tipoCombustible", {
-        get() { return _tipoCombustible; }
+        get() { return _tipoCombustible; },
+        enumerable
     });
 
     this.capacidad = capacidad;
-    this.cantCombustible = cantCombustible;    
+    this.cantCombustible = cantCombustible;
 }
 
 module.exports = Vehiculo;
