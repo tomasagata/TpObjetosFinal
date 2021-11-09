@@ -1,5 +1,3 @@
-const CentroDeControl = require("./CentroDeControl");
-
 const generadorId = (() => {
     let id = 0;
 
@@ -34,7 +32,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
         get() {
             return _id;
         },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "costo", {
@@ -46,7 +44,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
             }
         },
         get() { return _costo; },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "almacenajeMax", {
@@ -58,7 +56,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
             }
         },
         get() { return _almacenajeMax; },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "almacenajeActual", {
@@ -70,12 +68,10 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
             } else if (valor >= 0) {
                 _almacenajeActual = valor;
                 console.log(`[!] Se necesita reponer combustible ${this.tipo}`);
-                let cdc = new CentroDeControl()
-                cdc.rellenarCombustible(this.tipo); // Sería un metodo estatico. Pero como no existen, lo implemento así
             } else { throw new Error("[-] Almacenaje actual negativo"); }
         },
         get() { return _almacenajeActual; },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "tipo", {
@@ -88,7 +84,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
             }
         },
         get() { return _tipoGasolina; },
-        enumerable
+        enumerable: true
     });
 
     this.costo = costo;
@@ -97,4 +93,4 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
     this.tipo = tipo;
 }
 
-module.exports = Gasolina;
+module.exports = { Gasolina };

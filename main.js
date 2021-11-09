@@ -12,7 +12,7 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
 // let vei = generadorVehiculos.generarVehiculo();
-let arrVei = generadorVehiculos.generarVehiculos(20);
+let arrVei = generadorVehiculos.generarVehiculos(100);
 let cdc = new CentroDeControl();
 
 arrVei.forEach((vei) => {
