@@ -29,7 +29,7 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
         get() {
             return _id;
         },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "capacidad", {
@@ -41,7 +41,7 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
             }
         },
         get() { return _capacidad; },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "cantCombustible", {
@@ -55,12 +55,12 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
             }
         },
         get() { return _cantCombustible; },
-        enumerable
+        enumerable: true
     });
 
     Object.defineProperty(this, "tipoCombustible", {
         get() { return _tipoCombustible; },
-        enumerable
+        enumerable: true
     });
 
     this.capacidad = capacidad;

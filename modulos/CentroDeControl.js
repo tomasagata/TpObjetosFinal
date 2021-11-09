@@ -1,7 +1,3 @@
-const Diesel = require("./Diesel");
-const Regular = require("./Regular");
-const Premium = require("./Premium");
-
 function CentroDeControl() {
 
     // Utilizo patrón Singleton, puesto que debe haber solo un facturador 
@@ -16,40 +12,43 @@ function CentroDeControl() {
         return CentroDeControl.instancia;
     }
 
-    var _reservas = {
-        Diesel: new Diesel(),
-        Regular: new Regular(),
-        Premium: new Premium(),
-    };
+
     var _idOperacion = 1;
     var _ultimasDiezOperaciones = [];
 
     function facturarCarga(vehiculo, cantidadCargada) {
         var cargaEficaz;
 
+        // Chequeo que la cantidad cargada no sea vacía, de lo contrario se considera una carga completa
         if (cantidadCargada != undefined) {
-            cargaEficaz = Math.min((vehiculo.capacidad - vehiculo.cantCombustible) * _reservas[vehiculo.tipoCombustible].costo, parsearCantidadCargada(cantidadCargada));
+            cargaEficaz = Math.min((vehiculo.capacidad - vehiculo.cantCombustible) * vehiculo.tipoCombustible.costo, parsearCantidadCargada(cantidadCargada));
         } else {
-            cargaEficaz = (vehiculo.capacidad - vehiculo.cantCombustible) * _reservas[vehiculo.tipoCombustible].costo;
+            cargaEficaz = (vehiculo.capacidad - vehiculo.cantCombustible) * vehiculo.tipoCombustible.costo;
         }
 
+        cargaEficaz = Math.round(cargaEficaz * 100) / 100;
+
         _ultimasDiezOperaciones.push({
-            idOperacion: "" + _idOperacion,
+            idOperacion: _idOperacion,
             tipoOperacion: "carga",
             idVehiculo: "" + vehiculo.id,
-            tipoCombustible: vehiculo.tipoCombustible,
+            tipoCombustible: "" + vehiculo.tipoCombustible.tipo,
             volumenCargado: "" + (vehiculo.capacidad - vehiculo.cantCombustible),
-            balanceCombustibleAnterior: "" + _reservas[tipo].almacenajeActual,
-            balanceCombustibleNuevo: "" + (_reservas[tipo].almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible)),
+            balanceCombustibleAnterior: "" + vehiculo.tipoCombustible.almacenajeActual,
+            balanceCombustibleNuevo: "" + (vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible)),
             beneficio: cargaEficaz
         });
 
-        _reservas[tipo].almacenajeActual = _reservas[tipo].almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
+        vehiculo.tipoCombustible.almacenajeActual = vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
 
         if (_idOperacion % 10 == 0) {
             cierreDeCaja();
         }
         _idOperacion++;
+
+        if (vehiculo.tipoCombustible.almacenajeActual < 500) {
+            rellenarCombustible(vehiculo.tipoCombustible);
+        }
     }
 
     function rellenarCombustible(tipo) {
@@ -57,21 +56,21 @@ function CentroDeControl() {
             throw new Error("[-] tipo de combustible indefinido");
         }
 
-        volumenACargar = _reservas[tipo].almacenajeMax - _reservas[tipo].almacenajeActual;
+        volumenACargar = tipo.almacenajeMax - tipo.almacenajeActual;
 
         _ultimasDiezOperaciones.push({
-            idOperacion: "" + _idOperacion,
+            idOperacion: _idOperacion,
             tipoOperacion: "Restock",
             idVehiculo: "---",
-            tipoCombustible: "" + tipo,
+            tipoCombustible: "" + tipo.tipo,
             volumenCargado: "" + volumenACargar,
-            balanceCombustibleAnterior: "" + _reservas[tipo].almacenajeActual,
-            balanceCombustibleNuevo: "" + _reservas[tipo].almacenajeMax,
-            beneficio: -1 * _reservas[tipo].costo * volumenACargar,
+            balanceCombustibleAnterior: "" + tipo.almacenajeActual,
+            balanceCombustibleNuevo: "" + tipo.almacenajeMax,
+            beneficio: Math.round(-1 * tipo.costo * volumenACargar * 100) / 100,
         });
 
-        _reservas[tipo].almacenajeActual = _reservas[tipo].almacenajeMax;
-        console.log("[!] Repuesto " + volumenACargar + "L de combustible " + tipo);
+        tipo.almacenajeActual = tipo.almacenajeMax;
+        console.log("[!] Se repuso " + volumenACargar + "L de combustible " + tipo.tipo);
 
         if (_idOperacion % 10 == 0) {
             cierreDeCaja();
@@ -104,8 +103,7 @@ function CentroDeControl() {
     }
 
     return {
-        facturarCarga,
-        rellenarCombustible
+        facturarCarga
     }
 }
 
