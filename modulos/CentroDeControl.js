@@ -18,6 +18,8 @@ function CentroDeControl() {
 
     function facturarCarga(vehiculo, cantidadCargada) {
         var cargaEficaz;
+        let ret1 = undefined;
+        let ret2 = [];
 
         // Chequeo que la cantidad cargada no sea vacía, de lo contrario se considera una carga completa
         if (cantidadCargada != undefined) {
@@ -42,16 +44,21 @@ function CentroDeControl() {
         vehiculo.tipoCombustible.almacenajeActual = vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
 
         if (_idOperacion % 10 == 0) {
+            ret1 = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
         _idOperacion++;
 
         if (vehiculo.tipoCombustible.almacenajeActual < 500) {
-            rellenarCombustible(vehiculo.tipoCombustible);
+            ret2 = rellenarCombustible(vehiculo.tipoCombustible);
         }
+
+        return ret1 ? ret1 : ret2;
     }
 
     function rellenarCombustible(tipo) {
+        let ret = [];
+
         if (tipo === undefined) {
             throw new Error("[-] tipo de combustible indefinido");
         }
@@ -73,9 +80,12 @@ function CentroDeControl() {
         console.log("[!] Se repuso " + volumenACargar + "L de combustible " + tipo.tipo);
 
         if (_idOperacion % 10 == 0) {
+            ret = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
         _idOperacion++;
+
+        return ret;
     }
 
     function cierreDeCaja() {
