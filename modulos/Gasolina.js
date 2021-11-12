@@ -1,5 +1,5 @@
 const generadorId = (() => {
-    let id = 0;
+    let id = -1; // para que empiecen desde 0 y coincidan con el índice del arreglo en gasolinera
 
     const incrementarId = () => {
         id++;

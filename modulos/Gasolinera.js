@@ -2,15 +2,21 @@ const Diesel = require("./Diesel");
 const Premium = require("./Premium");
 const Regular = require("./Regular");
 
-const Gasolinera = (function () {
-    let gasolinas = {
-        regular: Regular(),
-        premium: Premium(),
-        diesel: Diesel()
-    };
+const Gasolinera = (function() {
+    let gasolinas = [new Regular(), new Premium(), new Diesel()];
+
+    function getGasolina(nombre) {
+        var i;
+        for (i = 0; i < gasolinas.length; i++) {
+            if (gasolinas[i].tipo === nombre) {
+                return gasolinas[i];
+            }
+        }
+    }
 
     return {
-        gasolinas
+        gasolinas,
+        getGasolina
     }
 })();
 
