@@ -15,7 +15,7 @@ Moto.prototype.constructor = Moto.prototype;
 
 Moto.prototype.obtenerTipoCombustible = function() {
     let randomInt = Math.floor(Math.random() * 2);
-    return randomInt === 0 ? Gasolinera.gasolinas.regular : Gasolinera.gasolinas.premium;
+    return randomInt === 0 ? Gasolinera.getGasolina("Regular") : Gasolinera.getGasolina("Premium");
 }
 
 module.exports = Moto;

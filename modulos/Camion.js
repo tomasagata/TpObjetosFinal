@@ -7,7 +7,7 @@ function Camion(capacidad = 100, cantCombustible = 0) {
         return new Camion(capacidad, cantCombustible);
     }
 
-    Vehiculo.call(this, capacidad, cantCombustible, Gasolinera.gasolinas.diesel);
+    Vehiculo.call(this, capacidad, cantCombustible, Gasolinera.getGasolina("Diesel"));
 }
 
 Camion.prototype = Object.create(Vehiculo.prototype);
