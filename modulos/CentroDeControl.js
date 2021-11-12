@@ -14,9 +14,10 @@ function CentroDeControl() {
 
 
     var _idOperacion = 1;
-    var _ultimasDiezOperaciones = [];
+    var _ultimasDiezOperaciones = []; // Nunca tiene que haber más de 10 operaciones acá
 
-    function facturarCarga(vehiculo, cantidadCargada) {
+
+    function facturarCarga(vehiculo, flag = false, cantidadCargada) {
         var cargaEficaz;
         let ret1 = undefined;
         let ret2 = [];
@@ -43,7 +44,7 @@ function CentroDeControl() {
 
         vehiculo.tipoCombustible.almacenajeActual = vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
 
-        if (_idOperacion % 10 == 0) {
+        if (_ultimasDiezOperaciones.length % 10 == 0 || flag) {
             ret1 = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
@@ -54,6 +55,20 @@ function CentroDeControl() {
         }
 
         return ret1 ? ret1 : ret2;
+    }
+
+    function facturarCargas(arregloVehiculos, flag = false) {
+        if (arregloVehiculos === undefined || arregloVehiculos.length == 0) {
+            return [];
+        }
+
+        let ultimo = arregloVehiculos.pop();
+        let arrRet = [];
+        arregloVehiculos.forEach((v) => {
+            arrRet = arrRet.concat(facturarCarga(v));
+        });
+
+        return arrRet.concat(facturarCarga(ultimo, flag));
     }
 
     function rellenarCombustible(tipo) {
@@ -79,7 +94,7 @@ function CentroDeControl() {
         tipo.almacenajeActual = tipo.almacenajeMax;
         console.log("[!] Se repuso " + volumenACargar + "L de combustible " + tipo.tipo);
 
-        if (_idOperacion % 10 == 0) {
+        if (_ultimasDiezOperaciones.length % 10 == 0) {
             ret = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
@@ -113,7 +128,8 @@ function CentroDeControl() {
     }
 
     return {
-        facturarCarga
+        facturarCarga,
+        facturarCargas
     }
 }
 

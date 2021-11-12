@@ -12,12 +12,10 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
 // let vei = generadorVehiculos.generarVehiculo();
-let arrVei = generadorVehiculos.generarVehiculos(100);
 let cdc = new CentroDeControl();
+let arrVei = generadorVehiculos.generarVehiculos(97);
 
-arrVei.forEach((vei) => {
-    cdc.facturarCarga(vei);
-});
+cdc.facturarCargas(arrVei, true);
 // console.log(vei.capacidad);
 // arrVei.map(vei => console.log(`${vei.capacidad} -> ${vei.tipoCombustible}`));
 //arrVei.map(vei => console.log(vei.id));
