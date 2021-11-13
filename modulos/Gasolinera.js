@@ -6,12 +6,7 @@ const Gasolinera = (function() {
     let gasolinas = [new Regular(), new Premium(), new Diesel()];
 
     function getGasolina(nombre) {
-        var i;
-        for (i = 0; i < gasolinas.length; i++) {
-            if (gasolinas[i].tipo === nombre) {
-                return gasolinas[i];
-            }
-        }
+        return gasolinas.filter(gasolina => gasolina.tipo === nombre)[0];
     }
 
     return {

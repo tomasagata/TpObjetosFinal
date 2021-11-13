@@ -18,21 +18,21 @@ const { describe, test, expect } = require("@jest/globals");
 describe("Verificación de la creacion Gasolinas", () => {
 
     test("Creación Regular", () => {
-        const gas = Gasolinera.gasolinas.regular;
+        const gas = Gasolinera.getGasolina("Regular");
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([1, 1, 1000, 1000]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([0, 1, 1000, 1000]);
     });
 
     test("Creación Premium", () => {
-        const gas = Gasolinera.gasolinas.premium;
+        const gas = Gasolinera.getGasolina("Premium");
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([2, 2.3, 750, 750]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([1, 2.3, 750, 750]);
     });
 
     test("Creación Diesel", () => {
-        const gas = Gasolinera.gasolinas.diesel;
+        const gas = Gasolinera.getGasolina("Diesel");
 
-        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([3, 0.7, 2000, 2000]);
+        expect([gas.id, gas.costo, gas.almacenajeMax, gas.almacenajeActual]).toStrictEqual([2, 0.7, 2000, 2000]);
     });
 });
 
