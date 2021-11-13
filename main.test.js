@@ -61,13 +61,13 @@ describe("Ejemplo creación automóviles", () => {
 
 describe("Prueba GeneradorVehiculos", () => {
     test("Creación 1 solo vehiculo", () => {
-        const vei = generadorVehiculos.generarVehiculo();
+        const vei = generadorVehiculos.generarVehiculoRandom();
 
         expect(vei).toBeInstanceOf(Vehiculo);
     });
 
     test("Creación 10 vehículos", () => {
-        const arrVei = generadorVehiculos.generarVehiculos(10);
+        const arrVei = generadorVehiculos.generarVehiculosRandom(10);
 
         expect(arrVei.length).toBe(10);
         arrVei.forEach(vei => {

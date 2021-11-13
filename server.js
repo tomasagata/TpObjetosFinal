@@ -8,7 +8,7 @@ const cdc = new CentroDeControl();
 
 
 app.get("/generar_vehiculo", (req, res) => {
-    let arrVei = generadorVehiculos.generarVehiculos(parseInt(req.query.cant));
+    let arrVei = generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant));
 
     res.send(cdc.facturarCargas(arrVei, true));
 });
