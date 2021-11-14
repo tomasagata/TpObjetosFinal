@@ -7,7 +7,7 @@ function Diesel(costo = 0.7, almacenajeMax = 2000, almacenajeActual = almacenaje
         return new Diesel(costo, almacenajeMax, almacenajeActual);
     }
 
-    Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Diesel");
+    Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Diesel", 12);
 }
 
 Diesel.prototype = Object.create(Gasolina.prototype);

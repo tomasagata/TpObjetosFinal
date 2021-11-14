@@ -15,10 +15,10 @@ const generadorId = (() => {
     }
 })();
 
-function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
+function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovisionamiento) {
 
     if (!(this instanceof Gasolina)) {
-        return new Gasolina(costo, almacenajeMax, almacenajeActual, tipo);
+        return new Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovisionamiento);
     }
 
 
@@ -27,6 +27,9 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
     var _almacenajeMax;
     var _almacenajeActual;
     var _tipoGasolina;
+    var _tiempoAprovisionamiento;
+    var _progresoAprovisionamiento;
+    var _litrosProximoRelleno = 0;
 
     Object.defineProperty(this, "id", {
         get() {
@@ -87,10 +90,48 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo) {
         enumerable: true
     });
 
+    Object.defineProperty(this, "tiempoAprovisionamiento", {
+        set(v) {
+            if (v < 0) {
+                throw new Error("[-] El tiempo de aprovisionamiento no puede ser negativo");
+            } else {
+                _tiempoAprovisionamiento = v;
+            }
+        },
+        get() { return _tiempoAprovisionamiento; },
+        enumerable: true
+    });
+
+    Object.defineProperty(this, "progresoAprovisionamiento", {
+        set(v) {
+            if (v < -1) {
+                throw new Error("[-] El progreso debe ser un numero positivo o -1");
+            } else {
+                _progresoAprovisionamiento = v;
+            }
+        },
+        get() { return _progresoAprovisionamiento; },
+        enumerable: true
+    });
+
+    Object.defineProperty(this, "litrosProximoRelleno", {
+        set(v) {
+            if (v < 0) {
+                throw new Error("[-] La cantidad a rellenar debe ser > 0");
+            } else {
+                _litrosProximoRelleno = v;
+            }
+        },
+        get() { return _litrosProximoRelleno; },
+        enumerable: true
+    });
+
     this.costo = costo;
     this.almacenajeMax = almacenajeMax;
     this.almacenajeActual = almacenajeActual;
     this.tipo = tipo;
+    this.tiempoAprovisionamiento = tiempoAprovisionamiento;
+    this.progresoAprovisionamiento = -1;
 }
 
 module.exports = { Gasolina };

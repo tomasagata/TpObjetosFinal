@@ -1,3 +1,5 @@
+const gasolinera = require("./Gasolinera");
+
 function CentroDeControl() {
 
     // Utilizo patrón Singleton, puesto que debe haber solo un facturador 
@@ -14,13 +16,12 @@ function CentroDeControl() {
 
 
     var _idOperacion = 1;
-    var _ultimasDiezOperaciones = []; // Nunca tiene que haber más de 10 operaciones acá
+    var _ultimasDiezOperaciones = []; // Nunca TENDRIA que haber más de 10 operaciones acá
 
 
     function facturarCarga(vehiculo, flag = false, cantidadCargada) {
         var cargaEficaz;
-        let ret1 = undefined;
-        let ret2 = [];
+        let ret = [];
 
         // Chequeo que la cantidad cargada no sea vacía, de lo contrario se considera una carga completa
         if (cantidadCargada != undefined) {
@@ -31,30 +32,50 @@ function CentroDeControl() {
 
         cargaEficaz = Math.round(cargaEficaz * 100) / 100;
 
-        _ultimasDiezOperaciones.push({
-            idOperacion: _idOperacion,
-            tipoOperacion: "carga",
-            idVehiculo: "" + vehiculo.id,
-            tipoCombustible: "" + vehiculo.tipoCombustible.tipo,
-            volumenCargado: "" + (vehiculo.capacidad - vehiculo.cantCombustible),
-            balanceCombustibleAnterior: "" + vehiculo.tipoCombustible.almacenajeActual,
-            balanceCombustibleNuevo: "" + (vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible)),
-            beneficio: cargaEficaz
-        });
+        if (cargaEficaz <= vehiculo.tipoCombustible.costo * vehiculo.tipoCombustible.almacenajeActual) {
 
-        vehiculo.tipoCombustible.almacenajeActual = vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
+            _ultimasDiezOperaciones.push({
+                idOperacion: _idOperacion,
+                tipoOperacion: "Carga",
+                idVehiculo: "" + vehiculo.id,
+                tipoCombustible: "" + vehiculo.tipoCombustible.tipo,
+                volumenCargado: "" + (vehiculo.capacidad - vehiculo.cantCombustible),
+                balanceCombustibleAnterior: "" + vehiculo.tipoCombustible.almacenajeActual,
+                balanceCombustibleNuevo: "" + (vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible)),
+                beneficio: cargaEficaz
+            });
+
+            vehiculo.tipoCombustible.almacenajeActual = vehiculo.tipoCombustible.almacenajeActual - (vehiculo.capacidad - vehiculo.cantCombustible);
+        } else {
+
+            console.log("[-] No hay suficiente combustible como para reponer al vehiculo");
+
+            _ultimasDiezOperaciones.push({
+                idOperacion: _idOperacion,
+                tipoOperacion: "Carga Incompleta",
+                idVehiculo: "" + vehiculo.id,
+                tipoCombustible: "" + vehiculo.tipoCombustible.tipo,
+                volumenCargado: "0",
+                balanceCombustibleAnterior: "" + vehiculo.tipoCombustible.almacenajeActual,
+                balanceCombustibleNuevo: "" + vehiculo.tipoCombustible.almacenajeActual,
+                beneficio: 0
+            });
+
+        }
 
         if (_ultimasDiezOperaciones.length % 10 == 0 || flag) {
-            ret1 = _ultimasDiezOperaciones;
+            ret = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
         _idOperacion++;
 
-        if (vehiculo.tipoCombustible.almacenajeActual < 500) {
-            ret2 = rellenarCombustible(vehiculo.tipoCombustible);
+        ret = ret.concat(chequearAprovisionamiento());
+
+        if (vehiculo.tipoCombustible.almacenajeActual < 500 && vehiculo.tipoCombustible.progresoAprovisionamiento === -1) {
+            ret = ret.concat(rellenarCombustible(vehiculo.tipoCombustible));
         }
 
-        return ret1 ? ret1 : ret2;
+        return ret;
     }
 
     function facturarCargas(arregloVehiculos, flag = false) {
@@ -71,6 +92,7 @@ function CentroDeControl() {
         return arrRet.concat(facturarCarga(ultimo, flag));
     }
 
+
     function rellenarCombustible(tipo) {
         let ret = [];
 
@@ -78,27 +100,72 @@ function CentroDeControl() {
             throw new Error("[-] tipo de combustible indefinido");
         }
 
-        volumenACargar = tipo.almacenajeMax - tipo.almacenajeActual;
+        if (tipo.progresoAprovisionamiento === -1) {
 
-        _ultimasDiezOperaciones.push({
-            idOperacion: _idOperacion,
-            tipoOperacion: "Restock",
-            idVehiculo: "---",
-            tipoCombustible: "" + tipo.tipo,
-            volumenCargado: "" + volumenACargar,
-            balanceCombustibleAnterior: "" + tipo.almacenajeActual,
-            balanceCombustibleNuevo: "" + tipo.almacenajeMax,
-            beneficio: Math.round(-1 * tipo.costo * volumenACargar * 100) / 100,
+            tipo.progresoAprovisionamiento = 0;
+
+            tipo.litrosProximoRelleno = tipo.almacenajeMax - tipo.almacenajeActual;
+
+            _ultimasDiezOperaciones.push({
+                idOperacion: _idOperacion,
+                tipoOperacion: "Solicitud Restock",
+                idVehiculo: "---",
+                tipoCombustible: "" + tipo.tipo,
+                volumenCargado: "0",
+                balanceCombustibleAnterior: "" + tipo.almacenajeActual,
+                balanceCombustibleNuevo: "" + tipo.almacenajeActual,
+                beneficio: Math.round(-1 * tipo.costo * tipo.litrosProximoRelleno * 100) / 100,
+            });
+
+            if (_ultimasDiezOperaciones.length % 10 == 0) {
+                ret = _ultimasDiezOperaciones;
+                cierreDeCaja();
+            }
+            _idOperacion++;
+        }
+
+        return ret;
+    }
+
+
+    function chequearAprovisionamiento() {
+        let ret = [];
+
+        let aux = gasolinera.gasolinas.filter((g) => {
+            return g.progresoAprovisionamiento > -1;
         });
 
-        tipo.almacenajeActual = tipo.almacenajeMax;
-        console.log("[!] Se repuso " + volumenACargar + "L de combustible " + tipo.tipo);
+        aux.forEach((g) => {
+            g.progresoAprovisionamiento++;
+        });
 
-        if (_ultimasDiezOperaciones.length % 10 == 0) {
-            ret = _ultimasDiezOperaciones;
-            cierreDeCaja();
-        }
-        _idOperacion++;
+        let aux2 = aux.filter((g) => {
+            return g.progresoAprovisionamiento >= g.tiempoAprovisionamiento;
+        });
+
+        aux2.forEach((g) => {
+            g.progresoAprovisionamiento = -1;
+
+            _ultimasDiezOperaciones.push({
+                idOperacion: _idOperacion,
+                tipoOperacion: "Restock",
+                idVehiculo: "---",
+                tipoCombustible: "" + g.tipo,
+                volumenCargado: "" + g.litrosProximoRelleno,
+                balanceCombustibleAnterior: "" + g.almacenajeActual,
+                balanceCombustibleNuevo: "" + (g.litrosProximoRelleno + g.almacenajeActual),
+                beneficio: 0
+            });
+
+            g.almacenajeActual += g.litrosProximoRelleno;
+            console.log("[!] Se repuso " + g.litrosProximoRelleno + "L de combustible " + g.tipo);
+
+            if (_ultimasDiezOperaciones.length % 10 == 0) {
+                ret = ret.concat(_ultimasDiezOperaciones);
+                cierreDeCaja();
+            }
+            _idOperacion++;
+        });
 
         return ret;
     }

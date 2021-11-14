@@ -7,7 +7,7 @@ function Premium(costo = 2.3, almacenajeMax = 750, almacenajeActual = almacenaje
         return new Premium(costo, almacenajeMax, almacenajeActual);
     }
 
-    Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Premium");
+    Gasolina.call(this, costo, almacenajeMax, almacenajeActual, "Premium", 5);
 }
 
 Premium.prototype = Object.create(Gasolina.prototype);

@@ -10,6 +10,7 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "express": "^4.17.1",
+    "hbs": "^4.1.2",
     "jest": "^27.3.1"
   },
   "repository": {
@@ -19,8 +20,5 @@
   "bugs": {
     "url": "https://github.com/tomasagata/TpObjetosFinal/issues"
   },
-  "homepage": "https://github.com/tomasagata/TpObjetosFinal#readme",
-  "dependencies": {
-    "hbs": "^4.1.2"
-  }
+  "homepage": "https://github.com/tomasagata/TpObjetosFinal#readme"
 }
