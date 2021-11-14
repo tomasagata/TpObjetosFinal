@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/tomasagata/TpObjetosFinal/issues"
   },
-  "homepage": "https://github.com/tomasagata/TpObjetosFinal#readme"
+  "homepage": "https://github.com/tomasagata/TpObjetosFinal#readme",
+  "dependencies": {
+    "hbs": "^4.1.2"
+  }
 }
