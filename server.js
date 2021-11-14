@@ -8,6 +8,8 @@ const port = 3000;
 
 let app = express();
 app.set('view-engine', 'hbs');
+app.use(express.urlencoded())
+app.use(express.json())
 
 const cdc = new CentroDeControl();
 let arrVei = [];
@@ -54,12 +56,41 @@ app.get("/generar_tickets", (req, res) => {
 });
 
 app.post("/generar_vehiculos_random", (req, res) => {
-    arrVei = generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant));
+    arrVei = arrVei.concat(generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant)));
     res.sendStatus(200);
 });
 
 app.get("/generar_vehiculo", (req, res) => {
     res.send(arrVei);
+});
+
+app.get("/crear_vehiculo", (req, res) => {
+    res.render("creacionDeVehiculos.hbs");
+});
+
+app.post("/crear_vehiculo", (req, res) => {
+    let vehiculo = {
+        tipoVehiculo: req.body.tipoVehiculo,
+        tipoCombustible: req.body.tipoCombustible,
+    };
+
+    if (req.body.capacidad != '') {
+        vehiculo.capacidad = parseFloat(req.body.capacidad);
+    }
+    if (req.body.cantidadCombustible != '') {
+        vehiculo.cantCombustible = parseFloat(req.body.cantidadCombustible);
+    }
+    // console.log(req.body, vehiculo);
+    let nuevoVehiculo = generadorVehiculos.generarVehiculo(vehiculo);
+    arrVei.push(nuevoVehiculo);
+
+    
+    res.render("vehiculoCreado.hbs", {
+        id: nuevoVehiculo.id,
+        capacidad: nuevoVehiculo.capacidad,
+        cantidadCombustible: nuevoVehiculo.cantCombustible,
+        tipoCombustible: nuevoVehiculo.tipoCombustible.tipo,
+    });
 });
 
 app.listen(port, () => {
