@@ -53,12 +53,8 @@ app.get("/generar_tickets", (req, res) => {
     });
 });
 
-app.get("/generar_vehiculo", (req, res) => {
-    let arrVei = generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant));
-});
-
-app.post("/generar_vehiculo", (req, res) => {
-    arrVei = generadorVehiculos.generarVehiculos(parseInt(req.query.cant));
+app.post("/generar_vehiculos_random", (req, res) => {
+    arrVei = generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant));
     res.sendStatus(200);
 });
 
