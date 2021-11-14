@@ -11,9 +11,9 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 // Generador de Vehiculos
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 
-// let vei = generadorVehiculos.generarVehiculo();
+// let vei = generadorVehiculos.generarVehiculoRandom();
 let cdc = new CentroDeControl();
-let arrVei = generadorVehiculos.generarVehiculos(97);
+let arrVei = generadorVehiculos.generarVehiculosRandom(97);
 
 cdc.facturarCargas(arrVei, true);
 // console.log(vei.capacidad);
