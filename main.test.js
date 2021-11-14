@@ -13,6 +13,10 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 // Gasolinera
 const Gasolinera = require("./modulos/Gasolinera");
+// Generadores de templates
+const generarTabla = require("./controladores/generarTabla");
+const generarBotonesNavegacion = require("./controladores/generarBotonesNavegacion");
+
 const { describe, test, expect } = require("@jest/globals");
 
 describe("Verificación de la creacion Gasolinas", () => {
@@ -127,4 +131,18 @@ describe("Prueba GeneradorVehiculos", () => {
             expect(vei).toBeInstanceOf(Vehiculo);
         });
     })
+});
+
+describe("Prueba Generación de Template", () => {
+    test("Creción de una tabla", () => {
+        const tabla = generarTabla([]);
+        expect(tabla).toMatch(/\D*(<table)\D*/gm);
+        expect(tabla).toMatch(/\D*(<\/table>)\D*/gm);
+    });
+
+    test("Creción de un link", () => {
+        const link = generarBotonesNavegacion({}, {});
+        expect(link).toMatch(/\D*(<a)\D*/gm);
+        expect(link).toMatch(/\D*(<\/a>)\D*/gm);
+    });
 });
