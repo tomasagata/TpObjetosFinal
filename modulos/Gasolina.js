@@ -1,3 +1,4 @@
+// Generador de IDs
 const generadorId = (() => {
     let id = -1; // para que empiecen desde 0 y coincidan con el índice del arreglo en gasolinera
 
@@ -31,6 +32,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
     var _progresoAprovisionamiento;
     var _litrosProximoRelleno = 0;
 
+    // SETTERs y GETTERs
     Object.defineProperty(this, "id", {
         get() {
             return _id;
@@ -64,6 +66,7 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
 
     Object.defineProperty(this, "almacenajeActual", {
         set(valor) {
+            // Se valida que el almacenaje sea correcto, es decir, no supere al máximo y sea superior a 500
             if (valor > _almacenajeMax) {
                 throw new Error("[-] Almacenaje actual supera máximo permitido");
             } else if (valor >= 500) {
@@ -125,6 +128,8 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
         get() { return _litrosProximoRelleno; },
         enumerable: true
     });
+
+    // Fin de SETTERs y GETTERs
 
     this.costo = costo;
     this.almacenajeMax = almacenajeMax;

@@ -1,3 +1,4 @@
+// Generador de IDs
 const generadorId = (() => {
     let id = 0;
 
@@ -25,6 +26,7 @@ function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
     var _capacidad;
     var _cantCombustible;
 
+    // SETTERs y GETTERs
     Object.defineProperty(this, "id", {
         get() {
             return _id;

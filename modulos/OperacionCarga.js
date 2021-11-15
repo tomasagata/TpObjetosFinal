@@ -7,6 +7,7 @@ function OperacionCarga(operacion) {
     
     Operacion.call(this, operacion.beneficio);
 
+    // Setteo de valores de los atributos
     this.tipoOperacion = "Carga";
     this.idVehiculo = operacion.vehiculo.id;
     this.tipoCombustible = operacion.vehiculo.tipoCombustible.tipo;

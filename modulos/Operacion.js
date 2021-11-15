@@ -1,5 +1,6 @@
+// Generador de IDs
 const generadorId = (() => {
-    let id = 0; // para que empiecen desde 0 y coincidan con el índice del arreglo en gasolinera
+    let id = 0;
 
     const incrementarId = () => {
         id++;
@@ -23,6 +24,7 @@ function Operacion(beneficioObtenido) {
     var _idOperacion = generadorId.genId();
     var _beneficio = beneficioObtenido;
 
+    // SETTERs y GETTERs
     Object.defineProperty(this, "idOperacion", {
         get() {
             return _idOperacion;

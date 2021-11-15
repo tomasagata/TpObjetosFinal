@@ -1,6 +1,8 @@
 const generarTabla = (tickets, total) => {
+    // Inicializo un string vacío
     let filasTickets = "";
 
+    // Concaterno al string elementos HTML con la información de cada ticket
     tickets.forEach(ticket => {
         let fila = `
             <tr>
@@ -17,6 +19,7 @@ const generarTabla = (tickets, total) => {
         filasTickets += fila;
     });
     
+    // Armo la tabla 
     let tabla = `
         <table class="table table-striped">
             <thead>
