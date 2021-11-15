@@ -16,6 +16,12 @@ const generadorId = (() => {
     }
 })();
 
+/*
+    Reffactor:
+        Se agruparon atributos de gasolina en objetos Gasolina
+        Se abstrajeron metodos y propiedades de Auto, Moto y Camion en Vehiculo
+*/
+
 function Vehiculo(capacidad, cantCombustible, tipoCombustible) {
     if (!(this instanceof Vehiculo)) {
         return new Vehiculo();

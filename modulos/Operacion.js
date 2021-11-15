@@ -16,6 +16,12 @@ const generadorId = (() => {
     }
 })();
 
+/*
+    Reffactor:
+        Se abstrae de Centro de Control la funcionalidad de Operación
+        Se crean prototipos que hereden de Operación para abstraer la funcionalidad
+*/
+
 function Operacion(beneficioObtenido) {
     if (!(this instanceof Operacion)) {
         return new Operacion(beneficioObtenido);
