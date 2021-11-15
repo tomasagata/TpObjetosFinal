@@ -37,7 +37,7 @@ function CentroDeControl() {
 
     function facturarCarga(vehiculo, flag = false, cantidadCargada) {
         var cargaEficaz;
-        let ret = [];
+        let retorno = [];
         // Chequeo que la cantidad cargada no sea vacía, de lo contrario se considera una carga completa
         if (cantidadCargada != undefined) {
             cargaEficaz = Math.min((vehiculo.capacidad - vehiculo.cantCombustible), parsearCantidadCargada(cantidadCargada)) * vehiculo.tipoCombustible.costo;
@@ -61,91 +61,87 @@ function CentroDeControl() {
         }
 
         if (_ultimasDiezOperaciones.length % 10 == 0 || flag) {
-            ret = _ultimasDiezOperaciones;
+            retorno = _ultimasDiezOperaciones;
             cierreDeCaja();
         }
-        ret = ret.concat(chequearAprovisionamiento());
+        retorno = retorno.concat(chequearAprovisionamiento());
         if (vehiculo.tipoCombustible.almacenajeActual < 500 && vehiculo.tipoCombustible.progresoAprovisionamiento === -1) {
-            ret = ret.concat(rellenarCombustible(vehiculo.tipoCombustible));
+            retorno = retorno.concat(rellenarCombustible(vehiculo.tipoCombustible));
         }
-        return ret;
+        return retorno;
     }
 
     function facturarCargas(arregloVehiculos, flag = false) {
-        let arrRet = [];
-        if (arregloVehiculos === undefined || arregloVehiculos.length == 0) {
-            return arrRet;
+        let arrRetorno = [];
+        if (arregloVehiculos === undefined || arregloVehiculos.length === 0) {
+            return arrRetorno;
         }
 
         for (var i = 0; i < arregloVehiculos.length - 1; i++) {
-            arrRet = arrRet.concat(facturarCarga(arregloVehiculos[i]));
+            arrRetorno = arrRetorno.concat(facturarCarga(arregloVehiculos[i]));
         }
 
-        return arrRet.concat(facturarCarga(arregloVehiculos[i], flag));
+        return arrRetorno.concat(facturarCarga(arregloVehiculos[i], flag));
     }
 
 
     function rellenarCombustible(tipo) {
-        let ret = [];
+        let retorno = [];
 
         if (tipo === undefined) {
             throw new Error("[-] tipo de combustible indefinido");
         }
 
         if (tipo.progresoAprovisionamiento === -1) {
-
             tipo.progresoAprovisionamiento = 0;
-
             tipo.litrosProximoRelleno = tipo.almacenajeMax - tipo.almacenajeActual;
-
             _ultimasDiezOperaciones.push(OperacionSolicitudRestock({
                 gasolina: tipo,
                 beneficio: Math.round(-1 * tipo.costo * tipo.litrosProximoRelleno * 100) / 100,
             }));
-
             if (_ultimasDiezOperaciones.length % 10 == 0) {
-                ret = _ultimasDiezOperaciones;
+                retorno = _ultimasDiezOperaciones;
                 cierreDeCaja();
             }
         }
 
-        return ret;
+        return retorno;
     }
 
 
     function chequearAprovisionamiento() {
-        let ret = [];
+        let retorno = [];
 
-        let aux = gasolinera.gasolinas.filter((g) => {
-            return g.progresoAprovisionamiento > -1;
+        let aux = gasolinera.gasolinas.filter((gasolina) => {
+            return gasolina.progresoAprovisionamiento > -1;
         });
 
-        aux.forEach((g) => {
-            g.progresoAprovisionamiento++;
+        aux.forEach((gasolina) => {
+            gasolina.progresoAprovisionamiento++;
         });
 
-        let aux2 = aux.filter((g) => {
-            return g.progresoAprovisionamiento >= g.tiempoAprovisionamiento;
+        let aux2 = aux.filter((gasolina) => {
+            return gasolina.progresoAprovisionamiento >= gasolina.tiempoAprovisionamiento;
         });
 
-        aux2.forEach((g) => {
-            g.progresoAprovisionamiento = -1;
+        aux2.forEach((gasolina) => {
+            gasolina.progresoAprovisionamiento = -1;
 
             _ultimasDiezOperaciones.push(OperacionRestock({
-                gasolina: g,
+                gasolina,
                 beneficio: 0
             }));
 
-            g.almacenajeActual += g.litrosProximoRelleno;
-            console.log("[!] Se repuso " + g.litrosProximoRelleno + "L de combustible " + g.tipo);
+            gasolina.almacenajeActual += gasolina.litrosProximoRelleno;
+            console.log("[!] Se repuso " + gasolina.litrosProximoRelleno + "L de combustible " + gasolina.tipo);
 
             if (_ultimasDiezOperaciones.length % 10 == 0) {
-                ret = ret.concat(_ultimasDiezOperaciones);
+                retorno = retorno.concat(_ultimasDiezOperaciones);
                 cierreDeCaja();
             }
         });
 
-        return ret;
+        return retorno;
     }
 
     function cierreDeCaja() {

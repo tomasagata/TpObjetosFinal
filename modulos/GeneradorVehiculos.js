@@ -69,25 +69,17 @@ const generadorVehiculos = (() => {
         }
 
         if (o.hasOwnProperty("tipoVehiculo") && tipoVehiculos[o.tipoVehiculo] != undefined) {
-
             if (o.hasOwnProperty("capacidad")) {
-
                 if (o.hasOwnProperty("cantCombustible")) {
-
                     if (o.hasOwnProperty("tipoCombustible")) {
-
                         return tipoVehiculos[o.tipoVehiculo](o.capacidad, o.cantCombustible, o.tipoCombustible);
                     }
-
                     return tipoVehiculos[o.tipoVehiculo](o.capacidad, o.cantCombustible);
                 }
-
                 return tipoVehiculos[o.tipoVehiculo](o.capacidad);
             }
-
             return tipoVehiculos[o.tipoVehiculo]();
         }
-
         return generarVehiculoRandom();
 
     };
