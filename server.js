@@ -4,6 +4,7 @@ const CentroDeControl = require("./modulos/CentroDeControl");
 const generadorVehiculos = require("./modulos/GeneradorVehiculos");
 const generarTabla = require("./controladores/generarTabla");
 const generarBotonesNavegacion = require("./controladores/generarBotonesNavegacion");
+const calculoTotal = require("./controladores/calculoTotal");
 const port = 3000;
 
 let app = express();
@@ -17,7 +18,7 @@ let tickets = [];
 
 const generarPaginacion = (pagina, limite) => {
     pagina = parseInt(pagina) > 0 ? parseInt(pagina) : 1;
-    limite = parseInt(limite) >= 0 ? parseInt(limite) : 1;
+    limite = parseInt(limite) >= 0 ? parseInt(limite) : tickets.length;
     const offsetInicio = (pagina - 1) * limite;
     const offsetFin = pagina * limite;
     let resultado = {};
@@ -47,7 +48,7 @@ app.post("/generar_tickets", (req, res) => {
 
 app.get("/generar_tickets", (req, res) => {
     let paginacion = generarPaginacion(req.query.pagina, req.query.limite);
-    let tablaDeTickets = generarTabla(paginacion.resultados);
+    let tablaDeTickets = generarTabla(paginacion.resultados, calculoTotal(paginacion.resultados));
     let botonesNavegacion = generarBotonesNavegacion(paginacion.anterior, paginacion.siguiente);
     res.render("ticket.hbs", {
         tablaDeTickets, 
