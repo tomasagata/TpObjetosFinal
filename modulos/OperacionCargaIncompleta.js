@@ -7,6 +7,7 @@ function OperacionCargaIncompleta(operacion) {
 
     OperacionCarga.call(this, operacion);
 
+    // Setteo de valores de los atributos
     this.tipoOperacion = "Carga Incompleta";
     this.volumenCargado = 0;
     this.balanceCombustibleNuevo = this.balanceCombustibleAnterior;

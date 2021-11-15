@@ -7,6 +7,7 @@ function OperacionSolicitudRestock(operacion) {
     
     OperacionRestock.call(this, operacion);
 
+    // Setteo de valores de los atributos
     this.tipoOperacion = "Solicitud Restock";
     this.volumenCargado = 0;
     this.balanceCombustibleNuevo = this.balanceCombustibleAnterior;

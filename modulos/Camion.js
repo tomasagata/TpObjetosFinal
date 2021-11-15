@@ -7,6 +7,7 @@ function Camion(capacidad = 100, cantCombustible = 0, tipoCombustible) {
         return new Camion(capacidad, cantCombustible, tipoCombustible);
     }
 
+    // Como camión admite solo un tipo de gasolina, este se pasa por defecto
     Vehiculo.call(this, capacidad, cantCombustible, Gasolinera.getGasolina("Diesel"));
 }
 

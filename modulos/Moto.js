@@ -7,6 +7,7 @@ function Moto(capacidad = 10, cantCombustible = 0, tipoCombustible) {
         return new Moto(capacidad, cantCombustible, tipoCombustible);
     }
 
+    // Se determina si se obtiene el tipo de gasolina de modo aleatorio o se pasa por parámetro
     if (tipoCombustible === undefined) {
         tipoCombustible = this.obtenerTipoCombustible();
     } else if (typeof tipoCombustible === 'string' && (tipoCombustible === 'Premium' || tipoCombustible === 'Regular')) {
@@ -21,6 +22,7 @@ function Moto(capacidad = 10, cantCombustible = 0, tipoCombustible) {
 Moto.prototype = Object.create(Vehiculo.prototype);
 Moto.prototype.constructor = Moto.prototype;
 
+// Funcion para la obtención aleatoria del tipo de gasolina
 Moto.prototype.obtenerTipoCombustible = function() {
     let randomInt = Math.floor(Math.random() * 2);
     return randomInt === 0 ? Gasolinera.getGasolina("Regular") : Gasolinera.getGasolina("Premium");
