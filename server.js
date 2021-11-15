@@ -71,7 +71,7 @@ app.get("/generar_vehiculos_random", (req, res) => {
     res.sendStatus(200);
 });
 
-app.get("/generar_vehiculo", (req, res) => {
+app.get("/vehiculos", (req, res) => {
     res.send(arrVei);
 });
 

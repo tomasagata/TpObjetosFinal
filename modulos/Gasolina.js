@@ -94,11 +94,11 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
     });
 
     Object.defineProperty(this, "tiempoAprovisionamiento", {
-        set(v) {
-            if (v < 0) {
+        set(valor) {
+            if (valor < 0) {
                 throw new Error("[-] El tiempo de aprovisionamiento no puede ser negativo");
             } else {
-                _tiempoAprovisionamiento = v;
+                _tiempoAprovisionamiento = valor;
             }
         },
         get() { return _tiempoAprovisionamiento; },
@@ -106,11 +106,11 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
     });
 
     Object.defineProperty(this, "progresoAprovisionamiento", {
-        set(v) {
-            if (v < -1) {
+        set(valor) {
+            if (valor < -1) {
                 throw new Error("[-] El progreso debe ser un numero positivo o -1");
             } else {
-                _progresoAprovisionamiento = v;
+                _progresoAprovisionamiento = valor;
             }
         },
         get() { return _progresoAprovisionamiento; },
@@ -118,11 +118,11 @@ function Gasolina(costo, almacenajeMax, almacenajeActual, tipo, tiempoAprovision
     });
 
     Object.defineProperty(this, "litrosProximoRelleno", {
-        set(v) {
-            if (v < 0) {
+        set(valor) {
+            if (valor < 0) {
                 throw new Error("[-] La cantidad a rellenar debe ser > 0");
             } else {
-                _litrosProximoRelleno = v;
+                _litrosProximoRelleno = valor;
             }
         },
         get() { return _litrosProximoRelleno; },
