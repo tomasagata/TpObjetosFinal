@@ -1,10 +1,18 @@
 const Vehiculo = require("./Vehiculo");
 const Gasolinera = require("./Gasolinera");
 
-function Moto(capacidad = 10, cantCombustible = 0) {
+function Moto(capacidad = 10, cantCombustible = 0, tipoCombustible) {
 
     if (!(this instanceof Moto)) {
-        return new Moto(capacidad, cantCombustible);
+        return new Moto(capacidad, cantCombustible, tipoCombustible);
+    }
+
+    if (tipoCombustible === undefined) {
+        tipoCombustible = this.obtenerTipoCombustible();
+    } else if (typeof tipoCombustible === 'string' && (tipoCombustible === 'Premium' || tipoCombustible === 'Regular')) {
+        tipoCombustible = Gasolinera.getGasolina(tipoCombustible);
+    } else {
+        throw new Error("[-] Tipo de combustible invalido");
     }
 
     Vehiculo.call(this, capacidad, cantCombustible, this.obtenerTipoCombustible());

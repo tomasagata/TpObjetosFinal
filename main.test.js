@@ -86,7 +86,8 @@ describe("Prueba GeneradorVehiculos", () => {
         const vei = generadorVehiculos.generarVehiculo({
             tipoVehiculo: "Auto",
             capacidad: 145,
-            cantCombustible: 23
+            cantCombustible: 23,
+            tipoCombustible: "Premium"
         });
 
         expect(vei).toBeInstanceOf(Vehiculo);
@@ -97,12 +98,14 @@ describe("Prueba GeneradorVehiculos", () => {
         arrVeiLit.push({
             tipoVehiculo: "Camion",
             capacidad: 145,
-            cantCombustible: 23
+            cantCombustible: 23,
+            tipoCombustible: "Diesel"
         });
         arrVeiLit.push({
             tipoVehiculo: "Moto",
             capacidad: 145,
-            cantCombustible: 23
+            cantCombustible: 23,
+            tipoCombustible: "Regular"
         });
 
         let arrVei = generadorVehiculos.generarVehiculos(arrVeiLit);
