@@ -2,20 +2,47 @@ const Auto = require("./Auto");
 const Camion = require("./Camion");
 const Moto = require("./Moto");
 
+/*
+GeneradorVehiculos es un objeto que hace uso del revealing module pattern para retornar los metodos basicos
+para la generacion de uno o varios vehiculos a traves de generacion aleatoria o datos pasados por parámetro.
+
+Refactorizaciones:
+    - Se transformó al generador de ser un objeto común a un objeto estatico a través de Revealing Module Pattern
+    - Además de poder generar Vehiculos de manera aleatoria, se agregó la posibilidad de crearlos por parámetro
+    - Reemplazo de múltiples parámetros en generarVehiculo/s por un objeto
+    - Reestructuración de Dependencias
+*/
+
 const generadorVehiculos = (() => {
+    // Establezco los tipos de vehículos a generar
+
     var tipoVehiculos = {
         "Auto": Auto,
         "Camion": Camion,
         "Moto": Moto
     };
 
+
+    // Planteo el método estandar de generacion de numeros
+
     const getRandomInt = () => {
         return Math.floor(Math.random() * 3); // Genera un entero aleatorio -> restringido a 0, 1 y 2
     }
 
+
+    /*
+    Generación de Vehiculo con objeto. Puede tirar errores. Al generar vehículos, para hacer máximo uso de
+    la habilidad de generacion aleatoria, se pueden dejar parámetros en blanco para que sean generados
+    automáticamente
+    */
+
     const generarVehiculo = (o) => {
 
         // VALIDACION DE DATOS ENTRANTES
+        /*
+        Si los datos ingresados existen y son erroneos, se tira un error. Si los datos no existen,
+        se generan automáticamente.
+        */
 
         if ((o.hasOwnProperty("tipoVehiculo") && typeof o.tipoVehiculo === 'string' && !(o.tipoVehiculo.match(/^([a-zA-Z])+$/))) || (o.hasOwnProperty("tipoVehiculo") && !(typeof o.tipoVehiculo === 'string'))) {
             throw new Error(typeof o.tipoVehiculo);
@@ -65,6 +92,8 @@ const generadorVehiculos = (() => {
 
     };
 
+    // Método para generar varios vehiculos por parámetro. Absorbe los errores.
+
     const generarVehiculos = (arrObj = []) => {
         var arr = [];
         arrObj.forEach((elem) => {
@@ -77,6 +106,11 @@ const generadorVehiculos = (() => {
 
         return arr;
     };
+
+    /* 
+    Los 2 metodos siguientes generan vehiculos al azar. La aleatorizacion solo se hace en el 
+    tipo de vehiculo y el tipo de combustible que utilizará
+    */
 
     const generarVehiculoRandom = () => {
         let randomIntIndex = getRandomInt();

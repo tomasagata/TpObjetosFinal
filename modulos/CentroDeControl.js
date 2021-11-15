@@ -4,6 +4,18 @@ const OperacionCargaIncompleta = require("./OperacionCargaIncompleta");
 const OperacionRestock = require("./OperacionRestock");
 const OperacionSolicitudRestock = require("./OperacionSolicitudRestock");
 
+/*
+CentroDeControl es el objeto Unico por donde se realizan todas las facturaciones, recargas y cierres de caja.
+Esta 100% automatizado, de manera tal que solo se tiene que centrar en facturar a los vehiculos, y los cierres
+de caja se harán automáticamente.
+
+Refactorizaciones:
+    - Se utiliza el patrón Singleton para generar una única instancia de CentroDeControl
+    - En vez de llamar a rellenarCombustible manualmente por cada carga, se hace automáticamente cuando la cantidad de combustible decae a <500
+    - Agregado el flag para que facturarCarga retorne a pedido las ultimas facturaciones
+    - Optimizacion del uso de dependencias
+*/
+
 function CentroDeControl() {
     // Utilizo patrón Singleton, puesto que debe haber solo un facturador 
     // para que no mezclen los ids de facturación.
@@ -17,6 +29,11 @@ function CentroDeControl() {
     }
 
     var _ultimasDiezOperaciones = []; // Nunca TENDRIA que haber más de 10 operaciones acá
+
+    /*
+    Metodo principal de facturación. Realiza checkout cada 10 vehiculos o a voluntad si se le agrega
+    el flag = true
+    */
 
     function facturarCarga(vehiculo, flag = false, cantidadCargada) {
         var cargaEficaz;

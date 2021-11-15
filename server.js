@@ -42,7 +42,8 @@ const generarPaginacion = (pagina, limite) => {
 }
 
 app.post("/generar_tickets", (req, res) => {
-    tickets = cdc.facturarCargas(arrVei, true);
+    tickets = tickets.concat(cdc.facturarCargas(arrVei, true));
+    arrVei = [];
     // console.log(tickets);
     res.sendStatus(200);
 });
