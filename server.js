@@ -43,6 +43,7 @@ const generarPaginacion = (pagina, limite) => {
 
 app.post("/generar_tickets", (req, res) => {
     tickets = cdc.facturarCargas(arrVei, true);
+    // console.log(tickets);
     res.sendStatus(200);
 });
 

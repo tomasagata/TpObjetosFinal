@@ -41,8 +41,6 @@ const generadorVehiculos = (() => {
             }
         }
 
-
-
         if (o.hasOwnProperty("tipoVehiculo") && tipoVehiculos[o.tipoVehiculo] != undefined) {
 
             if (o.hasOwnProperty("capacidad")) {
