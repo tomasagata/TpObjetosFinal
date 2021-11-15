@@ -1,4 +1,4 @@
-const generarTabla = tickets => {
+const generarTabla = (tickets, total) => {
     let filasTickets = "";
 
     tickets.forEach(ticket => {
@@ -33,6 +33,10 @@ const generarTabla = tickets => {
             </thead>
             <tbody>
                 ${filasTickets}
+                <tr>
+                    <th scope="row" colspan="7">Total</th>
+                    <td>${total}</td>
+                </tr>
             </tbody>
         </table>
     `;
