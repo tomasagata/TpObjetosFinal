@@ -60,12 +60,11 @@ function CentroDeControl() {
             return arrRet;
         }
 
-        let ultimo = arregloVehiculos.pop();
-        arregloVehiculos.forEach((v) => {
-            arrRet = arrRet.concat(facturarCarga(v));
-        });
+        for (var i = 0; i < arregloVehiculos.length - 1; i++) {
+            arrRet = arrRet.concat(facturarCarga(arregloVehiculos[i]));
+        }
 
-        return arrRet.concat(facturarCarga(ultimo, flag));
+        return arrRet.concat(facturarCarga(arregloVehiculos[i], flag));
     }
 
 

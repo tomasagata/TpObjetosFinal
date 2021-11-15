@@ -1,10 +1,10 @@
 const Vehiculo = require("./Vehiculo");
 const Gasolinera = require("./Gasolinera");
 
-function Camion(capacidad = 100, cantCombustible = 0) {
+function Camion(capacidad = 100, cantCombustible = 0, tipoCombustible) {
 
     if (!(this instanceof Camion)) {
-        return new Camion(capacidad, cantCombustible);
+        return new Camion(capacidad, cantCombustible, tipoCombustible);
     }
 
     Vehiculo.call(this, capacidad, cantCombustible, Gasolinera.getGasolina("Diesel"));

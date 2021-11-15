@@ -5,10 +5,8 @@ function OperacionCargaIncompleta(operacion) {
         return new OperacionCargaIncompleta(operacion);
     }
 
-    console.log(operacion);
-    
     OperacionCarga.call(this, operacion);
-    
+
     this.tipoOperacion = "Carga Incompleta";
     this.volumenCargado = 0;
     this.balanceCombustibleNuevo = this.balanceCombustibleAnterior;

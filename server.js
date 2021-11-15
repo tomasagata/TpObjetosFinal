@@ -52,12 +52,12 @@ app.get("/generar_tickets", (req, res) => {
     let tablaDeTickets = generarTabla(paginacion.resultados, calculoTotal(paginacion.resultados));
     let botonesNavegacion = generarBotonesNavegacion(paginacion.anterior, paginacion.siguiente);
     res.render("ticket.hbs", {
-        tablaDeTickets, 
+        tablaDeTickets,
         botonesNavegacion
     });
 });
 
-app.post("/generar_vehiculos_random", (req, res) => {
+app.get("/generar_vehiculos_random", (req, res) => {
     arrVei = arrVei.concat(generadorVehiculos.generarVehiculosRandom(parseInt(req.query.cant)));
     res.sendStatus(200);
 });
@@ -86,7 +86,7 @@ app.post("/crear_vehiculo", (req, res) => {
     let nuevoVehiculo = generadorVehiculos.generarVehiculo(vehiculo);
     arrVei.push(nuevoVehiculo);
 
-    
+
     res.render("vehiculoCreado.hbs", {
         id: nuevoVehiculo.id,
         capacidad: nuevoVehiculo.capacidad,
